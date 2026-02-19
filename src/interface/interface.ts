@@ -6,12 +6,13 @@ export interface Skill {
   icon: string;
 }
 
-export interface Experience {
+export interface ExperienceType {
   company: string;
   role: string;
   duration: string;
   description: string;
   logo: string;
+  projectLink?: string;
 }
 
 export interface Portfolio {
@@ -22,7 +23,7 @@ export interface Portfolio {
   mobile: string;
   profileImage: string;
   skills: Skill[];
-  experience: Experience[];
+  experience: ExperienceType[];
   social: {
     github: string;
     linkedin: string;
@@ -43,4 +44,11 @@ export interface SocialLinksType {
   linkedin: string;
   email: string;
   whatsapp: string;
+}
+
+export interface GalleryItem {
+  id: number;
+  src: string;
+  alt: string;
+  category: string;
 }

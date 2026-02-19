@@ -1,22 +1,25 @@
-import html2canvas from "html2canvas";
-import { jsPDF } from "jspdf";
-
 export const ExportPDF = () => {
-  const downloadPDF = async () => {
-    const input = document.body;
-    const canvas = await html2canvas(input);
-    const imgData = canvas.toDataURL("image/png");
-
-    const pdf = new jsPDF();
-    pdf.addImage(imgData, "PNG", 0, 0, 210, 295);
-    pdf.save("Nitesh_Khatri_Portfolio.pdf");
+  const downloadPDF = () => {
+    const link = document.createElement("a");
+    link.href = "/assets/pdf/nitesh-khatri-resume-front-end-ui-developer.pdf";
+    link.download = "nitesh-khatri-resume-front-end-ui-developer.pdf";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
 
   return (
-    <div className="text-center my-10">
+    <div className="text-center my-16">
       <button
         onClick={downloadPDF}
-        className="cursor-pointer px-6 font-poppins py-3 bg-indigo-600 text-white rounded-lg shadow-lg hover:bg-indigo-700 transition"
+        className="cursor-pointer px-8 py-3 
+                   bg-[#77691c] 
+                   text-[#cbde31] 
+                   font-semibold 
+                   rounded-full 
+                   shadow-lg 
+                   hover:bg-[#5e5315] 
+                   transition"
       >
         Export Portfolio as PDF
       </button>

@@ -1,32 +1,94 @@
+import { useEffect, useState } from "react";
+import { containerVariants, itemVariants } from "../constants/animation";
 import { usePortfolioStore } from "../store/store";
+import { motion } from "framer-motion";
+import { Particles } from "./Particles";
 
 const Hero = () => {
   const { data } = usePortfolioStore();
-  return (
-    <section className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-700 via-purple-700 to-pink-600 text-white px-6">
-      {/* Background blur circles */}
-      <div className="absolute w-72 h-72 bg-white/20 rounded-full blur-3xl top-20 left-20"></div>
-      <div className="absolute w-72 h-72 bg-pink-400/30 rounded-full blur-3xl bottom-20 right-20"></div>
 
-      <div className="relative text-center max-w-3xl">
-        <img
+  /* ================================
+     Typewriter Logic
+  ================================== */
+  const fullText = "Hi, I am Nitesh Khatri";
+  const [displayText, setDisplayText] = useState("");
+  const [index, setIndex] = useState(0);
+
+  useEffect(() => {
+    if (index < fullText.length) {
+      const timeout = setTimeout(() => {
+        setDisplayText((prev) => prev + fullText[index]);
+        setIndex(index + 1);
+      }, 70);
+
+      return () => clearTimeout(timeout);
+    }
+  }, [index]);
+
+  const scrollToSection = () => {
+    const section = document.getElementById("contact");
+    section?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  return (
+    <section
+      id="hero"
+      className="relative min-h-screen flex items-center justify-center px-6 overflow-hidden"
+      style={{
+        backgroundColor: "#cbde31",
+      }}
+    >
+      <Particles />
+
+      {/* Main Content */}
+      <motion.div
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+        className="relative text-center max-w-3xl"
+      >
+        {/* Profile Image */}
+        <motion.img
+          variants={itemVariants}
           src={data.profileImage}
-          className="w-40 h-40 rounded-full mx-auto border-4 border-white shadow-2xl mb-6"
+          alt="Profile"
+          className="w-40 h-40 rounded-full mx-auto border-4 border-[#77691c] shadow-2xl mb-6"
         />
 
-        <h1 className="text-5xl font-extrabold mb-4 tracking-wide">
-          {data.name}
-        </h1>
+        {/* Typewriter Heading */}
+        <motion.h1
+          variants={itemVariants}
+          className="text-4xl md:text-5xl font-extrabold mb-4 tracking-wide"
+          style={{ color: "#77691c" }}
+        >
+          {displayText}
+          <span className="animate-pulse">|</span>
+        </motion.h1>
 
-        <p className="text-xl opacity-90 mb-6">{data.title}</p>
+        {/* Title */}
+        <motion.p
+          variants={itemVariants}
+          className="text-xl mb-6"
+          style={{ color: "#77691c" }}
+        >
+          {data.title}
+        </motion.p>
 
-        <a
-          href="#contact"
-          className="px-8 py-3 bg-white text-indigo-700 font-semibold rounded-full shadow-lg hover:scale-105 transition"
+        {/* Button */}
+        <motion.button
+          variants={itemVariants}
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.95 }}
+          onClick={scrollToSection}
+          className="px-8 py-3 cursor-pointer font-semibold rounded-full shadow-lg transition"
+          style={{
+            backgroundColor: "#77691c",
+            color: "#cbde31",
+          }}
         >
           Hire Me
-        </a>
-      </div>
+        </motion.button>
+      </motion.div>
     </section>
   );
 };

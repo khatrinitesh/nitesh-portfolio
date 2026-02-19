@@ -19,11 +19,11 @@ body {
   overflow-x: hidden;
   min-height: 100%;
   height: 100%;
-}
-html {
   scroll-behavior: smooth;
+  -webkit-scroll-behavior: smooth;
+  -moz-webkit-scroll-behavior: smooth;
+  font-family: "Poppins", sans-serif;
 }
-
 .font-poppins {
   font-family: "Poppins", sans-serif;
 }

@@ -4,16 +4,18 @@ export const About = () => {
   const { data } = usePortfolioStore();
 
   return (
-    <section id="about" className="py-20 px-6 bg-gray-100">
+    <section id="about" className="py-20 px-6 bg-[#f8f9e8]">
       <div className="max-w-5xl mx-auto text-center">
-        <h2 className="text-4xl font-bold mb-6 font-poppins">About Me</h2>
+        <h2 className="text-4xl font-bold mb-6 font-poppins text-[#77691c]">
+          About Me
+        </h2>
 
-        <div className="bg-white rounded-2xl shadow-xl p-8 hover:shadow-2xl transition">
-          <p className="text-gray-700 leading-relaxed font-poppins">
+        <div className="bg-white border border-[#e5e7b8] rounded-2xl shadow-lg p-8 hover:shadow-2xl transition">
+          <p className="text-[#6b6b4d] leading-relaxed font-poppins">
             {data.about}
           </p>
 
-          <p className="mt-6 font-semibold text-indigo-600 font-poppins">
+          <p className="mt-6 font-semibold text-[#77691c] font-poppins">
             {data.graduation}
           </p>
         </div>

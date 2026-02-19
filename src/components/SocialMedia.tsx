@@ -13,9 +13,9 @@ const SocialMedia = () => {
               href={SocialLinks[key]}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-white hover:text-indigo-400 transition"
+              className="text-white transition"
             >
-              <Icon size={28} />
+              <Icon className="text-[#77691c]" size={28} />
             </a>
           );
         },

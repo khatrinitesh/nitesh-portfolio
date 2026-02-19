@@ -2,7 +2,7 @@
 export const Images = {
   profile: "/assets/img/profile.jpg",
   adsmnLogo: "/assets/img/logo-nk.png",
-};
+} as const;
 
 // Lottie Animations
 export const Lottie = {
