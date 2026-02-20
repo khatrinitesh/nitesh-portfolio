@@ -58,6 +58,7 @@ export const Navbar = () => {
         <div className="space-x-6 hidden md:flex">
           {NAV_ITEMS.map((item) => (
             <a
+              href={`#${item.id}`}
               key={item.id}
               onClick={() => scrollToSection(item.id)}
               className={`cursor-pointer font-poppins font-semibold transition ${
@@ -83,6 +84,7 @@ export const Navbar = () => {
           <div className="flex flex-col space-y-4">
             {NAV_ITEMS.map((item) => (
               <a
+                id={item.id}
                 key={item.id}
                 onClick={() => scrollToSection(item.id)}
                 className={`cursor-pointer font-poppins font-semibold transition ${
