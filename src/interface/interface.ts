@@ -48,7 +48,14 @@ export interface SocialLinksType {
 
 export interface GalleryItem {
   id: number;
+  title: string;
+  tech?: string;
+  liveUrl?: string;
   src: string;
   alt: string;
-  category: string;
+}
+export interface SkillImageComparisonProps {
+  title: string;
+  beforeImage: string;
+  afterImage: string;
 }

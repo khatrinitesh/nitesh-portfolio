@@ -67,7 +67,27 @@ export const portfolioData: Portfolio = {
     {
       name: "Vercel",
       level: "",
-      icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vercel/vercel-original.svg",
+      icon: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRqwNwDUq_S0U6wDzS60c45kVK5zpxF-03wsQ&s",
+    },
+    {
+      name: "Adobe Photoshop",
+      level: "",
+      icon: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/Adobe_Photoshop_CC_icon.svg/500px-Adobe_Photoshop_CC_icon.svg.png",
+    },
+    {
+      name: "Adobe XD",
+      level: "",
+      icon: "https://static.vecteezy.com/system/resources/previews/018/931/945/non_2x/adobe-xd-icon-free-png.png",
+    },
+    {
+      name: "Figma",
+      level: "",
+      icon: "https://images.icon-icons.com/3053/PNG/512/figma_macos_bigsur_icon_190183.png",
+    },
+    {
+      name: "Adobe Illustrator",
+      level: "",
+      icon: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/Adobe_Illustrator_CC_icon.svg/500px-Adobe_Illustrator_CC_icon.svg.png",
     },
   ],
 
@@ -123,7 +143,7 @@ export const portfolioData: Portfolio = {
       role: "Web Designer (Trainee)",
       duration: "07/2013 - 11/2014",
       description: `Created web templates, logos, brochures, business cards, and recommended a new website design.`,
-      logo: "https://www.mediatree.co.in/wp-content/uploads/2025/04/mediatree-logo-2025-color-300x62.png",
+      logo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQGHWsH9BAxCjexpXYFr3ZMlGfCd_lgvQ939w&s",
     },
   ],
 

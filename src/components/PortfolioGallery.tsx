@@ -1,73 +1,112 @@
-import React, { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import React from "react";
+import { motion, type Variants } from "framer-motion";
 import { galleryItems } from "../constants/galleryItems";
 import type { GalleryItem } from "../interface/interface";
 import { Colors } from "../constants/colors";
 
-const categories = ["all", "web", "app", "design"];
+const containerVariants = {
+  hidden: {},
+  show: {
+    transition: {
+      staggerChildren: 0.1,
+    },
+  },
+};
+
+const cardVariants: Variants = {
+  hidden: { opacity: 0, y: 40 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.6, ease: "easeOut" },
+  },
+};
 
 const PortfolioGallery: React.FC = () => {
-  const [selectedCategory, setSelectedCategory] = useState<string>("all");
-
-  const filteredItems =
-    selectedCategory === "all"
-      ? galleryItems
-      : galleryItems.filter((item) => item.category === selectedCategory);
-
   return (
-    <div className="container mx-auto px-4 py-8" id="projects">
-      {/* Filter Buttons */}
-      <div className="flex justify-center gap-4 mb-8">
-        {categories.map((cat) => (
-          <button
-            key={cat}
-            onClick={() => setSelectedCategory(cat)}
-            className="cursor-pointer px-4 py-2 rounded-full font-semibold transition-colors"
+    <section className="container mx-auto px-4 py-16" id="projects">
+      {/* Section Title */}
+      <motion.h2
+        initial={{ opacity: 0, y: -20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        viewport={{ once: true }}
+        className="text-3xl md:text-4xl font-bold text-center mb-16"
+      >
+        Featured Projects
+      </motion.h2>
+
+      {/* Masonry Layout */}
+      <motion.div
+        variants={containerVariants}
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true }}
+        className="columns-1 sm:columns-2 md:columns-3 lg:columns-4 gap-8 space-y-8"
+      >
+        {galleryItems.map((item: GalleryItem) => (
+          <motion.div
+            key={item.id}
+            variants={cardVariants}
+            layout
+            whileHover={{ y: -8 }}
+            className="break-inside-avoid cursor-pointer rounded-2xl overflow-hidden shadow-lg bg-white group relative"
             style={{
-              backgroundColor:
-                selectedCategory === cat
-                  ? Colors.filterActiveBg
-                  : Colors.filterInactiveBg,
-              color:
-                selectedCategory === cat
-                  ? Colors.filterActiveText
-                  : Colors.filterInactiveText,
+              border: `1px solid ${Colors.secondary}`,
             }}
           >
-            {cat.toUpperCase()}
-          </button>
-        ))}
-      </div>
-
-      {/* Masonry Gallery */}
-      <div className="columns-1 sm:columns-2 md:columns-3 lg:columns-4 gap-4 space-y-4">
-        <AnimatePresence>
-          {filteredItems.map((item: GalleryItem) => (
-            <motion.div
-              key={item.id}
-              layout
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.9 }}
-              whileHover={{
-                scale: 1.05,
-                boxShadow: `0 10px 20px ${Colors.primary}66`, // semi-transparent yellow shadow
-              }}
-              className="mb-4 break-inside-avoid rounded-lg overflow-hidden cursor-pointer"
-              style={{
-                border: `2px solid ${Colors.secondary}`,
-              }}
-            >
-              <img
+            {/* Image Wrapper */}
+            <div className="relative overflow-hidden">
+              <motion.img
                 src={item.src}
                 alt={item.alt}
-                className="w-full h-auto object-cover rounded-lg"
+                className="w-full object-cover"
+                whileHover={{ scale: 1.08 }}
+                transition={{ duration: 0.4 }}
               />
-            </motion.div>
-          ))}
-        </AnimatePresence>
-      </div>
-    </div>
+
+              {/* Hover Overlay */}
+              <motion.div
+                initial={{ opacity: 0 }}
+                whileHover={{ opacity: 1 }}
+                transition={{ duration: 0.3 }}
+                className="absolute inset-0 bg-black/60 flex items-center justify-center"
+              >
+                {item.liveUrl && (
+                  <motion.a
+                    href={item.liveUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    initial={{ y: 20, opacity: 0 }}
+                    whileHover={{ scale: 1.1 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    transition={{ duration: 0.3 }}
+                    className="px-6 py-2 rounded-lg font-semibold"
+                    style={{
+                      backgroundColor: Colors.primary,
+                      color: "#000",
+                    }}
+                  >
+                    View Project
+                  </motion.a>
+                )}
+              </motion.div>
+            </div>
+
+            {/* Content */}
+            <div className="p-5">
+              <h3 className="text-lg font-bold mb-2 group-hover:text-indigo-600 transition">
+                {item.title}
+              </h3>
+
+              {item.tech && (
+                <p className="text-sm text-gray-500">{item.tech}</p>
+              )}
+            </div>
+          </motion.div>
+        ))}
+      </motion.div>
+    </section>
   );
 };
 

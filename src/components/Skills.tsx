@@ -13,7 +13,7 @@ export const Skills = () => {
         {data.skills.map((skill, index) => (
           <div
             key={index}
-            className="bg-gradient-to-br from-[#f8f9e8] to-[#cbde31]/30 
+            className="bg-linear-to-br from-[#f8f9e8] to-[#cbde31]/30 
                        border border-[#e5e7b8]
                        rounded-2xl p-8 shadow-md text-center 
                        hover:-translate-y-2 hover:shadow-2xl 

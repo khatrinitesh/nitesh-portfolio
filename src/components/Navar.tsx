@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
 import { NAV_ITEMS } from "../constants/navigation";
 import { Images } from "../utils/assets";
+import { Sling as Hamburger } from "hamburger-react";
 
 export const Navbar = () => {
   const [activeSection, setActiveSection] = useState<string>("about");
+  const [isOpen, setOpen] = useState(false);
   const navbarHeight = 80;
 
-  // Scroll spy for active section
+  // Scroll spy
   useEffect(() => {
     const handleScroll = () => {
       let current = activeSection;
@@ -28,17 +30,17 @@ export const Navbar = () => {
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
-    handleScroll(); // initialize on load
+    handleScroll();
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Smooth scroll + update activeSection immediately on click
   const scrollToSection = (id: string) => {
     const el = document.getElementById(id);
     if (el) {
       const y = el.offsetTop - navbarHeight;
       window.scrollTo({ top: y, behavior: "smooth" });
       setActiveSection(id);
+      setOpen(false); // close mobile menu
     }
   };
 
@@ -52,11 +54,10 @@ export const Navbar = () => {
           className="w-12 h-12 rounded-full object-contain"
         />
 
-        {/* Links */}
+        {/* Desktop Links */}
         <div className="space-x-6 hidden md:flex">
           {NAV_ITEMS.map((item) => (
             <a
-              href={`#${item.id}`}
               key={item.id}
               onClick={() => scrollToSection(item.id)}
               className={`cursor-pointer font-poppins font-semibold transition ${
@@ -69,7 +70,33 @@ export const Navbar = () => {
             </a>
           ))}
         </div>
+
+        {/* Mobile Hamburger */}
+        <div className="md:hidden">
+          <Hamburger toggled={isOpen} toggle={setOpen} size={24} color="#fff" />
+        </div>
       </div>
+
+      {/* Mobile Menu */}
+      {isOpen && (
+        <div className="md:hidden bg-[#51591d] backdrop-blur-md px-6 pb-6">
+          <div className="flex flex-col space-y-4">
+            {NAV_ITEMS.map((item) => (
+              <a
+                key={item.id}
+                onClick={() => scrollToSection(item.id)}
+                className={`cursor-pointer font-poppins font-semibold transition ${
+                  activeSection === item.id
+                    ? "text-[#cbde31]"
+                    : "text-white hover:text-indigo-400"
+                }`}
+              >
+                {item.label}
+              </a>
+            ))}
+          </div>
+        </div>
+      )}
     </nav>
   );
 };

@@ -1,15 +1,13 @@
 import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 import { containerVariants, itemVariants } from "../constants/animation";
 import { usePortfolioStore } from "../store/store";
-import { motion } from "framer-motion";
 import { Particles } from "./Particles";
+import ImageComparisonSlider from "./ImageComparisonSlider";
 
-const Hero = () => {
+const Hero: React.FC = () => {
   const { data } = usePortfolioStore();
 
-  /* ================================
-     Typewriter Logic
-  ================================== */
   const fullText = "Hi, I am Nitesh Khatri";
   const [displayText, setDisplayText] = useState("");
   const [index, setIndex] = useState(0);
@@ -20,32 +18,27 @@ const Hero = () => {
         setDisplayText((prev) => prev + fullText[index]);
         setIndex(index + 1);
       }, 70);
-
       return () => clearTimeout(timeout);
     }
   }, [index]);
 
   const scrollToSection = () => {
-    const section = document.getElementById("contact");
-    section?.scrollIntoView({ behavior: "smooth" });
+    document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
   };
 
   return (
     <section
       id="hero"
-      className="relative min-h-screen flex items-center justify-center px-6 overflow-hidden"
-      style={{
-        backgroundColor: "#cbde31",
-      }}
+      className="relative min-h-screen flex flex-col items-center justify-center px-6 overflow-hidden"
+      style={{ backgroundColor: "#cbde31" }}
     >
       <Particles />
 
-      {/* Main Content */}
       <motion.div
         variants={containerVariants}
         initial="hidden"
         animate="visible"
-        className="relative text-center max-w-3xl"
+        className="relative text-center max-w-3xl mb-12"
       >
         {/* Profile Image */}
         <motion.img
@@ -80,7 +73,7 @@ const Hero = () => {
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.95 }}
           onClick={scrollToSection}
-          className="px-8 py-3 cursor-pointer font-semibold rounded-full shadow-lg transition"
+          className="px-8 py-3 font-semibold rounded-full shadow-lg transition"
           style={{
             backgroundColor: "#77691c",
             color: "#cbde31",
