@@ -3,7 +3,6 @@ import { motion } from "framer-motion";
 import { containerVariants, itemVariants } from "../constants/animation";
 import { usePortfolioStore } from "../store/store";
 import { Particles } from "./Particles";
-import ImageComparisonSlider from "./ImageComparisonSlider";
 
 const Hero: React.FC = () => {
   const { data } = usePortfolioStore();
