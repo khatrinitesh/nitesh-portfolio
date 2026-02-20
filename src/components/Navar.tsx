@@ -61,10 +61,10 @@ export const Navbar = () => {
               href={`#${item.id}`}
               key={item.id}
               onClick={() => scrollToSection(item.id)}
-              className={`cursor-pointer font-poppins font-semibold transition ${
+              className={`duration-200 delay-75 cursor-pointer font-poppins font-semibold transition ${
                 activeSection === item.id
                   ? "text-[#cbde31]"
-                  : "text-white hover:text-indigo-400"
+                  : "text-white hover:text-[#cbde31]"
               }`}
             >
               {item.label}

@@ -1,4 +1,5 @@
 import { About } from "./components/About";
+import BackToTop from "./components/BackToTop";
 import { Contact } from "./components/Contact";
 import { Experience } from "./components/Experience";
 import { ExportPDF } from "./components/ExportPDF";
@@ -11,17 +12,20 @@ import { Skills } from "./components/Skills";
 function App() {
   return (
     <>
-      <Navbar />
-      <main className="min-h-dvh">
-        <Hero />
-        <About />
-        <Skills />
-        <Experience />
-        <PortfolioGallery />
-        <Contact />
-        <ExportPDF />
-        <Footer />
-      </main>
+      <div className="relative">
+        <Navbar />
+        <main className="min-h-dvh">
+          <Hero />
+          <About />
+          <Skills />
+          <Experience />
+          <PortfolioGallery />
+          <Contact />
+          <ExportPDF />
+          <Footer />
+        </main>
+      </div>
+      <BackToTop />
     </>
   );
 }
