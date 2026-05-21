@@ -1,46 +1,67 @@
+import { Sling as Hamburger } from "hamburger-react";
 import { useEffect, useState } from "react";
 import { NAV_ITEMS } from "../constants/navigation";
 import { Images } from "../utils/assets";
-import { Sling as Hamburger } from "hamburger-react";
 
 export const Navbar = () => {
-  const [activeSection, setActiveSection] = useState<string>("about");
+  const [activeSection, setActiveSection] = useState("about");
   const [isOpen, setOpen] = useState(false);
+
   const navbarHeight = 80;
 
-  // Scroll spy
+  // =========================
+  // Scroll Spy
+  // =========================
   useEffect(() => {
     const handleScroll = () => {
-      let current = activeSection;
+      const scrollPosition = window.scrollY + navbarHeight + 100;
 
       for (const item of NAV_ITEMS) {
-        const el = document.getElementById(item.id);
-        if (el) {
-          const rect = el.getBoundingClientRect();
-          const top = rect.top - navbarHeight;
-          const bottom = rect.bottom - navbarHeight;
+        const section = document.getElementById(item.id);
 
-          if (top <= 0 && bottom > 0) {
-            current = item.id;
+        if (section) {
+          const offsetTop = section.offsetTop;
+          const offsetHeight = section.offsetHeight;
+
+          if (
+            scrollPosition >= offsetTop &&
+            scrollPosition < offsetTop + offsetHeight
+          ) {
+            setActiveSection(item.id);
+            break;
           }
         }
       }
-
-      setActiveSection(current);
     };
 
-    window.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener("scroll", handleScroll, {
+      passive: true,
+    });
+
     handleScroll();
-    return () => window.removeEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
   }, []);
 
+  // =========================
+  // Smooth Scroll
+  // =========================
   const scrollToSection = (id: string) => {
-    const el = document.getElementById(id);
-    if (el) {
-      const y = el.offsetTop - navbarHeight;
-      window.scrollTo({ top: y, behavior: "smooth" });
+    const section = document.getElementById(id);
+
+    if (section) {
+      const y =
+        section.getBoundingClientRect().top + window.pageYOffset - navbarHeight;
+
+      window.scrollTo({
+        top: y,
+        behavior: "smooth",
+      });
+
       setActiveSection(id);
-      setOpen(false); // close mobile menu
+      setOpen(false);
     }
   };
 
@@ -54,21 +75,25 @@ export const Navbar = () => {
           className="w-12 h-12 rounded-full object-contain"
         />
 
-        {/* Desktop Links */}
-        <div className="space-x-6 hidden md:flex">
+        {/* Desktop Menu */}
+        <div className="hidden space-x-8 md:flex">
           {NAV_ITEMS.map((item) => (
-            <a
-              href={`#${item.id}`}
+            <button
               key={item.id}
               onClick={() => scrollToSection(item.id)}
-              className={`duration-200 delay-75 cursor-pointer font-poppins font-semibold transition ${
+              className={`relative cursor-pointer font-poppins text-sm font-semibold transition-all duration-300 ${
                 activeSection === item.id
                   ? "text-[#cbde31]"
                   : "text-white hover:text-[#cbde31]"
               }`}
             >
               {item.label}
-            </a>
+
+              {/* Active Indicator */}
+              {activeSection === item.id && (
+                <span className="absolute -bottom-2 left-0 h-[2px] w-full bg-[#cbde31]" />
+              )}
+            </button>
           ))}
         </div>
 
@@ -80,21 +105,20 @@ export const Navbar = () => {
 
       {/* Mobile Menu */}
       {isOpen && (
-        <div className="md:hidden bg-[#51591d] backdrop-blur-md px-6 pb-6">
-          <div className="flex flex-col space-y-4">
+        <div className="bg-[#51591d] px-6 pb-6 backdrop-blur-md md:hidden">
+          <div className="flex flex-col space-y-5">
             {NAV_ITEMS.map((item) => (
-              <a
-                id={item.id}
+              <button
                 key={item.id}
                 onClick={() => scrollToSection(item.id)}
-                className={`cursor-pointer font-poppins font-semibold transition ${
+                className={`text-left font-poppins text-base font-semibold transition-all duration-300 ${
                   activeSection === item.id
                     ? "text-[#cbde31]"
-                    : "text-white hover:text-indigo-400"
+                    : "text-white hover:text-[#cbde31]"
                 }`}
               >
                 {item.label}
-              </a>
+              </button>
             ))}
           </div>
         </div>

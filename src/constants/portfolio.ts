@@ -2,7 +2,7 @@ import type { Portfolio } from "../interface/interface";
 
 export const portfolioData: Portfolio = {
   name: "Nitesh Khatri",
-  title: "React Frontend UI Developer",
+  title: "Senior React Frontend UI Developer",
   about:
     "I build scalable frontend systems using React, TypeScript, and modern architecture patterns. I focus on performance, maintainable code, and polished user interfaces.",
 

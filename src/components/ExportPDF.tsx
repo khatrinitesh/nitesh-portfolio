@@ -21,7 +21,7 @@ export const ExportPDF = () => {
                    hover:bg-[#5e5315] 
                    transition"
       >
-        Export Portfolio as PDF
+        Download Resume
       </button>
     </div>
   );
