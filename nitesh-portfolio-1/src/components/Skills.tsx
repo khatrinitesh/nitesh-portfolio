@@ -75,7 +75,11 @@ export const Skills = () => {
                   alt=""
                   aria-hidden="true"
                   loading="lazy"
-                  className="h-full w-full object-contain"
+                  className={`h-full w-full object-contain ${
+                    ["Responsive Web Design", "GitHub", "TanStack"].includes(skill.name)
+                      ? "brightness-0 invert"
+                      : ""
+                  }`}
                 />
               </div>
               <h3 className="font-poppins text-sm font-bold leading-snug text-slate-100 transition-colors group-hover:text-violet-200 sm:text-base">

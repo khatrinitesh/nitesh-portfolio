@@ -1,11 +1,13 @@
 import { motion } from "framer-motion";
+import gsap from "gsap";
 import { ArrowDown, ArrowRight, Sparkles } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { usePortfolioStore } from "../store/store";
 import { Particles } from "./Particles";
 
 const Hero: React.FC = () => {
   const { data } = usePortfolioStore();
+  const heroRef = useRef<HTMLElement>(null);
   const fullText = `Hi, I'm ${data.name}`;
   const [displayText, setDisplayText] = useState("");
   const [index, setIndex] = useState(0);
@@ -21,6 +23,76 @@ const Hero: React.FC = () => {
     return () => clearTimeout(timeout);
   }, [fullText, index]);
 
+  useEffect(() => {
+    const hero = heroRef.current;
+    if (!hero) return;
+
+    const context = gsap.context(() => {
+      gsap.fromTo(
+        ".gsap-reveal",
+        { opacity: 0, y: 28, filter: "blur(8px)" },
+        {
+          opacity: 1,
+          y: 0,
+          filter: "blur(0px)",
+          duration: 1,
+          stagger: 0.12,
+          delay: 0.15,
+          ease: "power3.out",
+        },
+      );
+
+      gsap.to(".gsap-glow", {
+        scale: 1.08,
+        opacity: 0.75,
+        duration: 2.8,
+        repeat: -1,
+        yoyo: true,
+        ease: "sine.inOut",
+      });
+
+      gsap.to(".gsap-float", {
+        y: -12,
+        duration: 3.2,
+        repeat: -1,
+        yoyo: true,
+        ease: "sine.inOut",
+      });
+
+      const handlePointerMove = (event: PointerEvent) => {
+        const bounds = hero.getBoundingClientRect();
+        const x = (event.clientX - bounds.left) / bounds.width - 0.5;
+        const y = (event.clientY - bounds.top) / bounds.height - 0.5;
+        gsap.to(".gsap-parallax", {
+          x: x * 18,
+          y: y * 14,
+          duration: 0.8,
+          ease: "power2.out",
+          overwrite: "auto",
+        });
+      };
+
+      const resetParallax = () => {
+        gsap.to(".gsap-parallax", {
+          x: 0,
+          y: 0,
+          duration: 1,
+          ease: "elastic.out(1, 0.5)",
+        });
+      };
+
+      hero.addEventListener("pointermove", handlePointerMove);
+      hero.addEventListener("pointerleave", resetParallax);
+
+      return () => {
+        hero.removeEventListener("pointermove", handlePointerMove);
+        hero.removeEventListener("pointerleave", resetParallax);
+      };
+    }, hero);
+
+    return () => context.revert();
+  }, []);
+
   const scrollToSection = () => {
     document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
   };
@@ -32,11 +104,12 @@ const Hero: React.FC = () => {
   return (
     <section
       id="hero"
+      ref={heroRef}
       className="relative isolate flex min-h-screen items-center overflow-hidden bg-[#090b18] px-6 pb-16 pt-28 text-white sm:pt-32"
     >
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_76%_44%,_rgba(111,76,196,0.25),_transparent_42%),radial-gradient(ellipse_at_20%_80%,_rgba(40,118,157,0.15),_transparent_38%)]"
+        className="gsap-glow pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_76%_44%,_rgba(111,76,196,0.25),_transparent_42%),radial-gradient(ellipse_at_20%_80%,_rgba(40,118,157,0.15),_transparent_38%)]"
       />
       <Particles />
 
@@ -50,7 +123,7 @@ const Hero: React.FC = () => {
               transition: { staggerChildren: 0.16, delayChildren: 0.2 },
             },
           }}
-          className="relative z-10 max-w-3xl"
+          className="gsap-reveal relative z-10 max-w-3xl"
         >
           <motion.div
             variants={{
@@ -86,6 +159,22 @@ const Hero: React.FC = () => {
           >
             {data.title}
           </motion.p>
+          <motion.div
+            variants={{
+              hidden: { opacity: 0, y: 18 },
+              visible: { opacity: 1, y: 0 },
+            }}
+            className="mt-5 flex flex-wrap gap-3"
+          >
+            <div className="rounded-2xl border border-white/10 bg-white/[0.05] px-5 py-3">
+              <p className="font-poppins text-2xl font-bold text-white">12+</p>
+              <p className="mt-1 font-poppins text-xs text-slate-400">Years of experience</p>
+            </div>
+            <div className="rounded-2xl border border-white/10 bg-white/[0.05] px-5 py-3">
+              <p className="font-poppins text-2xl font-bold text-white">5+</p>
+              <p className="mt-1 font-poppins text-xs text-slate-400">Years with Front-End & React</p>
+            </div>
+          </motion.div>
           <motion.p
             variants={{
               hidden: { opacity: 0, y: 18 },
@@ -127,7 +216,7 @@ const Hero: React.FC = () => {
           initial={{ opacity: 0, scale: 0.88, x: 24 }}
           animate={{ opacity: 1, scale: 1, x: 0 }}
           transition={{ duration: 0.9, delay: 0.3, ease: "easeOut" }}
-          className="relative mx-auto flex w-full max-w-md items-center justify-center lg:max-w-none"
+          className="gsap-parallax relative mx-auto flex w-full max-w-md items-center justify-center lg:max-w-none"
         >
           <motion.div
             aria-hidden="true"
@@ -144,7 +233,7 @@ const Hero: React.FC = () => {
           <motion.div
             animate={{ y: [0, -10, 0] }}
             transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-            className="relative rounded-full bg-gradient-to-br from-violet-300 via-violet-500 to-cyan-300 p-[3px] shadow-[0_0_90px_rgba(139,92,246,0.25)]"
+            className="gsap-float relative rounded-full bg-gradient-to-br from-violet-300 via-violet-500 to-cyan-300 p-[3px] shadow-[0_0_90px_rgba(139,92,246,0.25)]"
           >
             <img
               src={data.profileImage}

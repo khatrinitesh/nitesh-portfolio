@@ -1,6 +1,7 @@
-import React from "react";
 import { motion, type Variants } from "framer-motion";
+import gsap from "gsap";
 import { ArrowUpRight } from "lucide-react";
+import React from "react";
 import { galleryItems } from "../constants/galleryItems";
 import type { GalleryItem } from "../interface/interface";
 
@@ -19,6 +20,64 @@ const cardVariants: Variants = {
     scale: 1,
     transition: { duration: 0.5, ease: "easeOut" },
   },
+};
+
+const handleCardMove = (event: React.MouseEvent<HTMLElement>) => {
+  const card = event.currentTarget;
+  const bounds = card.getBoundingClientRect();
+  const x = event.clientX - bounds.left;
+  const y = event.clientY - bounds.top;
+  const rotateX = ((y / bounds.height) - 0.5) * -6;
+  const rotateY = ((x / bounds.width) - 0.5) * 6;
+
+  gsap.to(card, {
+    rotateX,
+    rotateY,
+    y: -8,
+    transformPerspective: 900,
+    duration: 0.35,
+    ease: "power2.out",
+    overwrite: "auto",
+  });
+  gsap.to(card.querySelector(".project-card-image"), {
+    scale: 1.08,
+    x: (x / bounds.width - 0.5) * 8,
+    y: (y / bounds.height - 0.5) * 8,
+    duration: 0.45,
+    ease: "power2.out",
+    overwrite: "auto",
+  });
+  gsap.to(card.querySelector(".project-card-overlay"), {
+    opacity: 0.78,
+    duration: 0.3,
+    overwrite: "auto",
+  });
+};
+
+const handleCardLeave = (event: React.MouseEvent<HTMLElement>) => {
+  const card = event.currentTarget;
+
+  gsap.to(card, {
+    rotateX: 0,
+    rotateY: 0,
+    y: 0,
+    duration: 0.7,
+    ease: "elastic.out(1, 0.55)",
+    overwrite: "auto",
+  });
+  gsap.to(card.querySelector(".project-card-image"), {
+    scale: 1,
+    x: 0,
+    y: 0,
+    duration: 0.65,
+    ease: "power3.out",
+    overwrite: "auto",
+  });
+  gsap.to(card.querySelector(".project-card-overlay"), {
+    opacity: 1,
+    duration: 0.45,
+    overwrite: "auto",
+  });
 };
 
 const PortfolioGallery: React.FC = () => {
@@ -62,7 +121,8 @@ const PortfolioGallery: React.FC = () => {
             <motion.article
               key={item.id}
               variants={cardVariants}
-              whileHover={{ y: -6 }}
+              onMouseMove={handleCardMove}
+              onMouseLeave={handleCardLeave}
               transition={{ type: "spring", stiffness: 280, damping: 23 }}
               className="group overflow-hidden rounded-3xl border border-white/10 bg-[#141628] shadow-[0_18px_50px_-36px_rgba(0,0,0,0.8)] transition-colors hover:border-violet-300/25 hover:shadow-[0_24px_60px_-32px_rgba(109,76,195,0.28)]"
             >
@@ -72,15 +132,13 @@ const PortfolioGallery: React.FC = () => {
                     src={item.src}
                     alt={item.alt}
                     loading="lazy"
-                    className="absolute inset-0 h-full w-full object-cover"
-                    whileHover={{ scale: 1.07 }}
-                    transition={{ duration: 0.55, ease: "easeOut" }}
+                    className="project-card-image absolute inset-0 h-full w-full object-cover"
                   />
                 ) : (
                   <div
                     role="img"
                     aria-label={item.alt}
-                    className="absolute inset-0 flex flex-col items-center justify-center bg-[radial-gradient(ellipse_at_center,_#711c23_0%,_#390b12_62%,_#21070b_100%)] px-5 text-center text-white"
+                    className="project-card-image absolute inset-0 flex flex-col items-center justify-center bg-[radial-gradient(ellipse_at_center,_#711c23_0%,_#390b12_62%,_#21070b_100%)] px-5 text-center text-white"
                   >
                     <motion.span
                       aria-hidden="true"
@@ -107,7 +165,7 @@ const PortfolioGallery: React.FC = () => {
 
                 <div
                   aria-hidden="true"
-                  className="absolute inset-0 bg-gradient-to-t from-[#21070b]/90 via-[#21070b]/10 to-[#21070b]/15"
+                  className="project-card-overlay absolute inset-0 bg-gradient-to-t from-[#21070b]/90 via-[#21070b]/10 to-[#21070b]/15"
                 />
                 <span className="absolute left-4 top-4 rounded-full border border-white/30 bg-[#21070b]/45 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-white backdrop-blur-sm">
                   Project {String(index + 1).padStart(2, "0")}
