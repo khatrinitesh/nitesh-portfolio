@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import gsap from "gsap";
+import Lenis from "lenis";
 import { ArrowDown, ArrowRight, Sparkles } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { usePortfolioStore } from "../store/store";
@@ -11,6 +12,31 @@ const Hero: React.FC = () => {
   const fullText = `Hi, I'm ${data.name}`;
   const [displayText, setDisplayText] = useState("");
   const [index, setIndex] = useState(0);
+  const lenisRef = useRef<Lenis | null>(null);
+
+  useEffect(() => {
+    const lenis = new Lenis({
+      duration: 1.15,
+      easing: (value) => Math.min(1, 1.001 - 2 ** (-10 * value)),
+      smoothWheel: true,
+      syncTouch: false,
+    });
+    let animationFrame = 0;
+
+    const raf = (time: number) => {
+      lenis.raf(time);
+      animationFrame = requestAnimationFrame(raf);
+    };
+
+    lenisRef.current = lenis;
+    animationFrame = requestAnimationFrame(raf);
+
+    return () => {
+      cancelAnimationFrame(animationFrame);
+      lenis.destroy();
+      lenisRef.current = null;
+    };
+  }, []);
 
   useEffect(() => {
     if (index >= fullText.length) return;
@@ -94,11 +120,13 @@ const Hero: React.FC = () => {
   }, []);
 
   const scrollToSection = () => {
-    document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
+    const section = document.getElementById("contact");
+    if (section) lenisRef.current?.scrollTo(section);
   };
 
   const scrollToProjects = () => {
-    document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" });
+    const section = document.getElementById("projects");
+    if (section) lenisRef.current?.scrollTo(section);
   };
 
   return (

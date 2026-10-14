@@ -36,7 +36,7 @@ export const Skills = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.4 }}
           transition={{ duration: 0.6, ease: "easeOut" }}
-          className="mb-10 sm:mb-12"
+          className="mb-10 transform-gpu will-change-transform sm:mb-12"
         >
           <div className="mb-4 flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.24em] text-violet-300">
             <span className="h-px w-8 bg-violet-400" />
@@ -55,7 +55,7 @@ export const Skills = () => {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.08 }}
-          className="grid grid-cols-2 gap-4 sm:grid-cols-3 sm:gap-5 lg:grid-cols-4 xl:grid-cols-5"
+          className="grid transform-gpu grid-cols-2 gap-4 will-change-transform sm:grid-cols-3 sm:gap-5 lg:grid-cols-4 xl:grid-cols-5"
         >
           {data.skills.map((skill, index) => (
             <motion.article
@@ -64,7 +64,7 @@ export const Skills = () => {
               whileHover={{ y: -5, scale: 1.025 }}
               whileTap={{ scale: 0.98 }}
               transition={{ type: "spring", stiffness: 300, damping: 22 }}
-              className="group relative overflow-hidden rounded-3xl border border-white/10 bg-[#141628] p-5 shadow-[0_18px_50px_-36px_rgba(0,0,0,0.8)] transition-colors hover:border-violet-300/30 hover:bg-[#191b31] hover:shadow-[0_24px_60px_-32px_rgba(109,76,195,0.28)] sm:p-6"
+              className="group relative transform-gpu overflow-hidden rounded-3xl border border-white/10 bg-[#141628] p-5 shadow-[0_18px_50px_-36px_rgba(0,0,0,0.8)] transition-colors will-change-transform hover:border-violet-300/30 hover:bg-[#191b31] hover:shadow-[0_24px_60px_-32px_rgba(109,76,195,0.28)] sm:p-6"
             >
               <span className="absolute right-4 top-4 font-poppins text-[10px] font-semibold tracking-[0.16em] text-violet-300/70">
                 {String(index + 1).padStart(2, "0")}

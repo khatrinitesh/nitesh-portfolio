@@ -25,7 +25,7 @@ export const Experience = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.3 }}
           transition={{ duration: 0.65, ease: "easeOut" }}
-          className="mb-12"
+          className="mb-12 transform-gpu will-change-transform"
         >
           <div className="mb-4 flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.24em] text-violet-300">
             <span className="h-px w-8 bg-violet-400" />
@@ -53,13 +53,13 @@ export const Experience = () => {
                   delay: Math.min(index * 0.08, 0.4),
                   ease: "easeOut",
                 }}
-                className="group relative pl-12 sm:pl-14"
+                className="group relative transform-gpu pl-12 will-change-transform sm:pl-14"
               >
                 <div className="absolute left-0 top-7 flex h-10 w-10 items-center justify-center rounded-full border-4 border-[#151226] bg-violet-500 text-white shadow-[0_0_24px_rgba(139,92,246,0.35)] sm:h-12 sm:w-12">
                   <BriefcaseBusiness size={17} aria-hidden="true" />
                 </div>
 
-                <div className="rounded-3xl border border-white/10 bg-[#141628] p-5 shadow-[0_18px_50px_-36px_rgba(0,0,0,0.8)] transition duration-300 group-hover:-translate-y-1 group-hover:border-violet-300/25 group-hover:shadow-[0_24px_60px_-32px_rgba(109,76,195,0.28)] sm:p-7">
+                <div className="transform-gpu rounded-3xl border border-white/10 bg-[#141628] p-5 shadow-[0_18px_50px_-36px_rgba(0,0,0,0.8)] transition duration-300 will-change-transform group-hover:-translate-y-1 group-hover:border-violet-300/25 group-hover:shadow-[0_24px_60px_-32px_rgba(109,76,195,0.28)] sm:p-7">
                   <div className="flex flex-col gap-5 sm:flex-row sm:items-start">
                     <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl border border-white/10 bg-[#0d1020] p-2">
                       <img

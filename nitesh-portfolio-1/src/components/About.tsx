@@ -25,7 +25,7 @@ export const About = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.35 }}
           transition={{ duration: 0.65, ease: "easeOut" }}
-          className="mb-10 sm:mb-12"
+          className="mb-10 transform-gpu will-change-transform sm:mb-12"
         >
           <div className="mb-4 flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.24em] text-violet-300">
             <span className="h-px w-8 bg-violet-400" />
@@ -48,7 +48,7 @@ export const About = () => {
               transition: { duration: 0.7, ease: "easeOut", staggerChildren: 0.16 },
             },
           }}
-          className="grid overflow-hidden rounded-3xl border border-white/10 bg-[#141628] shadow-[0_24px_70px_-36px_rgba(0,0,0,0.8)] md:grid-cols-[1.5fr_0.85fr]"
+          className="grid transform-gpu overflow-hidden rounded-3xl border border-white/10 bg-[#141628] shadow-[0_24px_70px_-36px_rgba(0,0,0,0.8)] will-change-transform md:grid-cols-[1.5fr_0.85fr]"
         >
           <motion.div
             variants={{

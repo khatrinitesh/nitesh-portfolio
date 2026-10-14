@@ -96,7 +96,7 @@ const PortfolioGallery: React.FC = () => {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: "easeOut" }}
           viewport={{ once: true, amount: 0.4 }}
-          className="mb-10 sm:mb-12"
+          className="mb-10 transform-gpu will-change-transform sm:mb-12"
         >
           <div className="mb-4 flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.24em] text-violet-300">
             <span className="h-px w-8 bg-violet-400" />
@@ -115,7 +115,7 @@ const PortfolioGallery: React.FC = () => {
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, amount: 0.06 }}
-          className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+          className="grid transform-gpu grid-cols-1 gap-6 will-change-transform sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
         >
           {galleryItems.map((item: GalleryItem, index) => (
             <motion.article
@@ -124,7 +124,7 @@ const PortfolioGallery: React.FC = () => {
               onMouseMove={handleCardMove}
               onMouseLeave={handleCardLeave}
               transition={{ type: "spring", stiffness: 280, damping: 23 }}
-              className="group overflow-hidden rounded-3xl border border-white/10 bg-[#141628] shadow-[0_18px_50px_-36px_rgba(0,0,0,0.8)] transition-colors hover:border-violet-300/25 hover:shadow-[0_24px_60px_-32px_rgba(109,76,195,0.28)]"
+              className="group transform-gpu overflow-hidden rounded-3xl border border-white/10 bg-[#141628] shadow-[0_18px_50px_-36px_rgba(0,0,0,0.8)] transition-colors will-change-transform hover:border-violet-300/25 hover:shadow-[0_24px_60px_-32px_rgba(109,76,195,0.28)]"
             >
               <div className="relative isolate aspect-[4/3] overflow-hidden bg-[#101020]">
                 {item.src ? (
@@ -132,13 +132,13 @@ const PortfolioGallery: React.FC = () => {
                     src={item.src}
                     alt={item.alt}
                     loading="lazy"
-                    className="project-card-image absolute inset-0 h-full w-full object-cover"
+                    className="project-card-image absolute inset-0 h-full w-full transform-gpu object-cover will-change-transform"
                   />
                 ) : (
                   <div
                     role="img"
                     aria-label={item.alt}
-                    className="project-card-image absolute inset-0 flex flex-col items-center justify-center bg-[radial-gradient(ellipse_at_center,_#711c23_0%,_#390b12_62%,_#21070b_100%)] px-5 text-center text-white"
+                    className="project-card-image absolute inset-0 flex transform-gpu flex-col items-center justify-center bg-[radial-gradient(ellipse_at_center,_#711c23_0%,_#390b12_62%,_#21070b_100%)] px-5 text-center text-white will-change-transform"
                   >
                     <motion.span
                       aria-hidden="true"
@@ -165,7 +165,7 @@ const PortfolioGallery: React.FC = () => {
 
                 <div
                   aria-hidden="true"
-                  className="project-card-overlay absolute inset-0 bg-gradient-to-t from-[#21070b]/90 via-[#21070b]/10 to-[#21070b]/15"
+                  className="project-card-overlay absolute inset-0 transform-gpu bg-gradient-to-t from-[#21070b]/90 via-[#21070b]/10 to-[#21070b]/15 will-change-opacity"
                 />
                 <span className="absolute left-4 top-4 rounded-full border border-white/30 bg-[#21070b]/45 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-white backdrop-blur-sm">
                   Project {String(index + 1).padStart(2, "0")}
